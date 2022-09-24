@@ -43,6 +43,11 @@ func main() {
 func InitConfig() error {
 	viper.AddConfigPath("configs")
 	viper.SetConfigName("server")
+	if err := viper.ReadInConfig(); err != nil {
+		return err
+	}
 
-	return viper.ReadInConfig()
+	viper.SetConfigName("db")
+
+	return viper.MergeInConfig()
 }
