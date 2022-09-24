@@ -1,12 +1,14 @@
 package main
 
 import (
+	"log"
+
+	"github.com/gunSlaveUnit/TaskTracker/pkg/db"
 	"github.com/gunSlaveUnit/TaskTracker/pkg/handler"
 	"github.com/gunSlaveUnit/TaskTracker/pkg/repository"
 	"github.com/gunSlaveUnit/TaskTracker/pkg/server"
 	"github.com/gunSlaveUnit/TaskTracker/pkg/service"
 	"github.com/spf13/viper"
-	"log"
 )
 
 func main() {
@@ -14,7 +16,20 @@ func main() {
 		log.Fatalf("ERROR: failed to initializing config: %s", err.Error())
 	}
 
-	repos := repository.NewRepository()
+	database, err := db.NewDB(&db.Config{
+		Host:     viper.GetString("db.host"),
+		Port:     viper.GetString("db.port"),
+		Username: viper.GetString("db.username"),
+		Password: viper.GetString("db.password"),
+		DBName:   viper.GetString("db.dbName"),
+		SSLMode:  viper.GetString("db.SSLMode"),
+	})
+
+	if err != nil {
+		log.Fatalf("ERROR: failed to connect to the database: %s", err.Error())
+	}
+
+	repos := repository.NewRepository(database)
 	serv := service.NewService(repos)
 	hand := handler.NewHandler(serv)
 
