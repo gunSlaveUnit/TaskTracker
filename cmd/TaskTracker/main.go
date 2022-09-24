@@ -19,7 +19,7 @@ func main() {
 	hand := handler.NewHandler(serv)
 
 	s := new(server.Server)
-	address := viper.GetString("host") + ":" + viper.GetString("port")
+	address := viper.GetString("server.host") + ":" + viper.GetString("server.port")
 	if err := s.Run(address, hand.InitRoutes()); err != nil {
 		log.Fatalf("Error occured while running server: %s", err.Error())
 	}
