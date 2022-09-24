@@ -1,5 +1,7 @@
 package service
 
+import "github.com/gunSlaveUnit/TaskTracker/pkg/repository"
+
 type Authorization interface {
 }
 
@@ -11,6 +13,6 @@ type Service struct {
 	Games
 }
 
-func NewService() *Service {
+func NewService(repository *repository.Repository) *Service {
 	return &Service{}
 }
