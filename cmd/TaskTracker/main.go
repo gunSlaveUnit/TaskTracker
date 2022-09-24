@@ -19,8 +19,8 @@ func main() {
 	database, err := db.NewDB(&db.Config{
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
-		Username: viper.GetString("db.username"),
-		Password: viper.GetString("db.password"),
+		Username: viper.Get("username").(string),
+		Password: viper.Get("password").(string),
 		DBName:   viper.GetString("db.dbName"),
 		SSLMode:  viper.GetString("db.SSLMode"),
 	})
@@ -42,12 +42,21 @@ func main() {
 
 func InitConfig() error {
 	viper.AddConfigPath("configs")
+
 	viper.SetConfigName("server")
 	if err := viper.ReadInConfig(); err != nil {
 		return err
 	}
 
 	viper.SetConfigName("db")
+	if err := viper.MergeInConfig(); err != nil {
+		return err
+	}
+
+	viper.AddConfigPath("envs")
+
+	viper.SetConfigName(".db")
+	viper.SetConfigType("env")
 
 	return viper.MergeInConfig()
 }
