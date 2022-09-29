@@ -5,12 +5,12 @@ import "github.com/jmoiron/sqlx"
 type Authorization interface {
 }
 
-type Games interface {
+type Tasks interface {
 }
 
 type Repository struct {
 	Authorization
-	Games
+	Tasks
 }
 
 func NewRepository(db *sqlx.DB) *Repository {

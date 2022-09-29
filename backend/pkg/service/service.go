@@ -5,12 +5,12 @@ import "github.com/gunSlaveUnit/TaskTracker/pkg/repository"
 type Authorization interface {
 }
 
-type Games interface {
+type Tasks interface {
 }
 
 type Service struct {
 	Authorization
-	Games
+	Tasks
 }
 
 func NewService(repository *repository.Repository) *Service {
