@@ -1,8 +1,12 @@
 package service
 
-import "github.com/gunSlaveUnit/TaskTracker/pkg/repository"
+import (
+	"github.com/gunSlaveUnit/TaskTracker/pkg/entities"
+	"github.com/gunSlaveUnit/TaskTracker/pkg/repository"
+)
 
 type Authorization interface {
+	CreateUser(user entities.User) (int, error)
 }
 
 type Tasks interface {
